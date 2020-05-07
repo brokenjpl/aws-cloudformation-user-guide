@@ -1,0 +1,49 @@
+entity Match {
+	id Long,
+    uuid UUID,
+	startDate Instant,
+	teamLeft String,
+    teamRight String    
+}
+
+entity ScoreBoard {
+	id Long,
+    leg Integer,
+	totalScore Integer
+}
+
+entity AreaScore{
+    id Long,
+	hits Integer,
+    point Integer,
+    area Area
+}
+
+enum Area {
+    TWENTY,
+    NINTEEN,
+    EIGHTEEN,
+    SEVENTEEN,
+    SIXTEEN,
+    FIFTEEN,
+    TRIPLE,
+    DOUBLE,
+    BULL
+}
+
+
+// defining multiple OneToMany relationships with comments
+relationship OneToMany {
+	Match{leftBoard(leftBoard)} to ScoreBoard
+  	Match{rightBoard(rightBoard)} to ScoreBoard
+	ScoreBoard to AreaScore
+}
+
+// Use Data Transfert Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl except AreaScore, Area
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
